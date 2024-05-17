@@ -26,17 +26,12 @@ pipeline{
         {
             steps{
                 script{
-                    dir('code'){
                         bat '''
                             cd code
                             aws ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com
 	                        powershell.exe -ExecutionPolicy Bypass -File ./ecr-img-push.ps1 %AWS_REGION% %AWS_ACCOUNT_ID% %ECR_REPO_NAME% "12345"
 	                        cd ..
                         '''
-                        
-                        
-                        bat "make push_img AWS_REGION=%AWS_REGION% AWS_ACCOUNT_ID=%AWS_ACCOUNT_ID% ECR_REPO_NAME=%ECR_REPO_NAME%"
-                    }
                 }    
             }
                         
